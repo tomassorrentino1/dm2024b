@@ -77,9 +77,6 @@ dapply[, clase_ternaria := NA ]
 rm(dataset)
 gc()
 
-# aqui se va acumulando la probabilidad del ensemble
-dapply[, prob_acumulada := 0]
-
 # Establezco cuales son los campos que puedo usar para la prediccion
 # el copy() es por la Lazy Evaluation
 campos_buenos <- copy(setdiff(colnames(dtrain), c("clase_ternaria")))
@@ -90,6 +87,9 @@ campos_buenos <- copy(setdiff(colnames(dtrain), c("clase_ternaria")))
 for( icorrida in seq(nrow(PARAM$corridas)) ){
 
   cat( "Corrida ", icorrida, " ; " )
+
+  # aqui se va acumulando la probabilidad del ensemble
+  dapply[, prob_acumulada := 0]
 
   # los parametros que voy a utilizar para rpart
   param_rpart <- PARAM$corridas[ icorrida ]
